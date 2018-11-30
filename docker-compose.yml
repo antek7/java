@@ -1,0 +1,31 @@
+version: '3'
+services:
+ mysql:  
+  image: mysql
+  container_name: pwcho2018-83797
+  networks:
+     Bridge-zadanie-1:
+        ipv4_address: 10.0.10.3
+  ports:
+   - "3306"
+  environment:
+   - MYSQL_ROOT_PASSWORD=root
+   - MYSQL_DATABASE=baza
+   - MYSQL_USER=bmilosierny
+   - MYSQL_PASSWORD=password
+
+ java:  
+  build: .
+  container_name: java
+  depends_on:
+    - mysql
+  networks:
+     Bridge-zadanie-1:
+        ipv4_address: 10.0.10.4
+     
+networks:
+   Bridge-zadanie-1:
+      driver: bridge
+      ipam: 
+         config:
+            - subnet: 10.0.10.0/24
